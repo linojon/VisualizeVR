@@ -13,6 +13,7 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
     private static final String TAG = "MainActivity";
 
     CardboardView cardboardView;
+    VisualizerBox visualizerBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,8 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
         cardboardView.setRestoreGLStateEnabled(false);
         cardboardView.setRenderer(new RenderBox(this, this));
         setCardboardView(cardboardView);
+
+        visualizerBox = new VisualizerBox(cardboardView);
     }
 
     @Override
