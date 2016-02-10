@@ -37,8 +37,8 @@ public class VisualizerBox {
                 audioBytes = bytes;
             }
 
-//            @Override
-//            public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
+            @Override
+            public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
 //                fftBytes = bytes;
 //                float max = 0;
 //                for(int i = 0; i < fftPrep.length; i++) {
@@ -56,7 +56,7 @@ public class VisualizerBox {
 //                    }
 //                    fftNorm[i] = (byte)(fftPrep[i] * coeff * 255);
 //                }
-//            }
+            }
         };
 
         visualizer.setDataCaptureListener(captureListener, Visualizer.getMaxCaptureRate(), true, true);

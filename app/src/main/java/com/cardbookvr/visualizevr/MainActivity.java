@@ -6,6 +6,7 @@ import com.cardbook.renderbox.IRenderBox;
 import com.cardbook.renderbox.RenderBox;
 import com.cardbook.renderbox.Transform;
 import com.cardbook.renderbox.components.Cube;
+import com.cardbookvr.visualizevr.visualizations.BasicWaveVisualization;
 import com.google.vrtoolkit.cardboard.CardboardActivity;
 import com.google.vrtoolkit.cardboard.CardboardView;
 
@@ -26,6 +27,7 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
         setCardboardView(cardboardView);
 
         visualizerBox = new VisualizerBox(cardboardView);
+        visualizerBox.activeViz = new BasicWaveVisualization(visualizerBox);
     }
 
     @Override
@@ -34,16 +36,17 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
                 .setLocalPosition(0,0,-7)
                 .setLocalRotation(45,60,0)
                 .addComponent(new Cube(true));
+        visualizerBox.setup();
     }
 
     @Override
     public void preDraw() {
-
+        visualizerBox.preDraw();
     }
 
     @Override
     public void postDraw() {
-
+        visualizerBox.postDraw();
     }
 
 }
