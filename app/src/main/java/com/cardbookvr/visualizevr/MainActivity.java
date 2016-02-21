@@ -6,7 +6,7 @@ import com.cardbook.renderbox.IRenderBox;
 import com.cardbook.renderbox.RenderBox;
 import com.cardbook.renderbox.Transform;
 import com.cardbook.renderbox.components.Cube;
-import com.cardbookvr.visualizevr.visualizations.BasicEQVisualization;
+import com.cardbookvr.visualizevr.visualizations.FFTVisualization;
 import com.google.vrtoolkit.cardboard.CardboardActivity;
 import com.google.vrtoolkit.cardboard.CardboardView;
 
@@ -27,7 +27,7 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
         setCardboardView(cardboardView);
 
         visualizerBox = new VisualizerBox(cardboardView);
-        visualizerBox.activeViz = new BasicEQVisualization(visualizerBox);
+        visualizerBox.activeViz = new FFTVisualization(visualizerBox);
     }
 
     @Override

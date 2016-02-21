@@ -23,6 +23,7 @@ public class VisualizerBox {
     public static int captureSize;
 
     public static int audioTexture = -1;
+    public static int fftTexture = -1;
 
     public static byte[] audioBytes;
     public static byte[] fftBytes, fftNorm;
@@ -35,8 +36,8 @@ public class VisualizerBox {
         //Capture size will define our fftBytes size
         visualizer.setCaptureSize(captureSize);
 
-//        fftPrep = new float[captureSize / 2];
-//        fftNorm = new byte[captureSize / 2];
+        fftPrep = new float[captureSize / 2];
+        fftNorm = new byte[captureSize / 2];
 
         Visualizer.OnDataCaptureListener captureListener = new Visualizer.OnDataCaptureListener() {
             @Override
@@ -47,23 +48,24 @@ public class VisualizerBox {
 
             @Override
             public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int samplingRate) {
-//                fftBytes = bytes;
-//                float max = 0;
-//                for(int i = 0; i < fftPrep.length; i++) {
-//                    if(fftBytes.length > i * 2) {
-//                        fftPrep[i] = (float)Math.sqrt(fftBytes[i * 2] * fftBytes[i * 2] + fftBytes[i * 2 + 1] * fftBytes[i * 2 + 1]);
-//                        if(fftPrep[i] > max){
-//                            max = fftPrep[i];
-//                        }
-//                    }
-//                }
-//                float coeff = 1 / max;
-//                for(int i = 0; i < fftPrep.length; i++) {
-//                    if(fftPrep[i] < MIN_THRESHOLD){
-//                        fftPrep[i] = 0;
-//                    }
-//                    fftNorm[i] = (byte)(fftPrep[i] * coeff * 255);
-//                }
+                fftBytes = bytes;
+                float max = 0;
+                for(int i = 0; i < fftPrep.length; i++) {
+                    if(fftBytes.length > i * 2) {
+                        fftPrep[i] = (float)Math.sqrt(fftBytes[i * 2] * fftBytes[i * 2] + fftBytes[i * 2 + 1] * fftBytes[i * 2 + 1]);
+                        if(fftPrep[i] > max){
+                            max = fftPrep[i];
+                        }
+                    }
+                }
+                float coeff = 1 / max;
+                for(int i = 0; i < fftPrep.length; i++) {
+                    if(fftPrep[i] < MIN_THRESHOLD){
+                        fftPrep[i] = 0;
+                    }
+                    fftNorm[i] = (byte)(fftPrep[i] * coeff * 255);
+                }
+                loadTexture(cardboardView, fftTexture, fftNorm);
             }
         };
 
@@ -74,6 +76,7 @@ public class VisualizerBox {
 
     public void setup() {
         audioTexture = genTexture();
+        fftTexture = genTexture();
         if(activeViz != null)
             activeViz.setup();
     }

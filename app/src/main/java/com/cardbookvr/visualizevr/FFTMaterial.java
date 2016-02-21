@@ -13,8 +13,8 @@ import java.nio.ShortBuffer;
 /**
  * Created by Jonathan on 2/20/2016.
  */
-public class BasicEQMaterial extends Material {
-    private static final String TAG = "basicEQMaterial";
+public class FFTMaterial extends Material {
+    private static final String TAG = "FFTMaterial";
 
     static int program = -1;        //Initialize to a totally invalid value for setup state
     static int positionParam;
@@ -22,17 +22,15 @@ public class BasicEQMaterial extends Material {
     static int textureParam;
     static int MVPParam;
     static int colorParam;
-    static int widthParam;
 
-    public float borderWidth = 0.01f;
-    public float[] borderColor = new float[]{0.6549f, 0.8392f, 1f, 1f};
+    public float[] borderColor = new float[]{0.8392f, 0.6549f, 1f, 1f};
 
     FloatBuffer vertexBuffer;
     FloatBuffer texCoordBuffer;
     ShortBuffer indexBuffer;
     int numIndices;
 
-    public BasicEQMaterial(){
+    public FFTMaterial(){
         super();
         setupProgram();
     }
@@ -41,7 +39,7 @@ public class BasicEQMaterial extends Material {
         if(program > -1)    //This means program has been set up (valid program or error)
             return;
         //Create shader program
-        program = createProgram( R.raw.basic_eq_vertex, R.raw.basic_eq_fragment);
+        program = createProgram( R.raw.fft_vertex, R.raw.fft_fragment);
         RenderBox.checkGLError("Bitmap GenTexture");
 
         //Get vertex attribute parameters
@@ -60,11 +58,10 @@ public class BasicEQMaterial extends Material {
         textureParam = GLES20.glGetUniformLocation(program, "u_Texture");
         MVPParam = GLES20.glGetUniformLocation(program, "u_MVP");
         colorParam = GLES20.glGetUniformLocation(program, "u_Color");
-        widthParam = GLES20.glGetUniformLocation(program, "u_Width");
-        RenderBox.checkGLError("Waveform params");
+        RenderBox.checkGLError("FFT params");
     }
 
-    public BasicEQMaterial setBuffers(FloatBuffer vertexBuffer, FloatBuffer texCoordBuffer, ShortBuffer indexBuffer, int numIndices) {
+    public FFTMaterial setBuffers(FloatBuffer vertexBuffer, FloatBuffer texCoordBuffer, ShortBuffer indexBuffer, int numIndices) {
         //Associate VBO data with this instance of the material
         this.vertexBuffer = vertexBuffer;
         this.texCoordBuffer = texCoordBuffer;
@@ -81,7 +78,7 @@ public class BasicEQMaterial extends Material {
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
 
         // Bind the texture to this unit.
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, VisualizerBox.audioTexture);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, VisualizerBox.fftTexture);
 
         // Tell the texture uniform sampler to use this texture in the shader by binding to texture unit 0.
         GLES20.glUniform1i(textureParam, 0);
@@ -92,7 +89,6 @@ public class BasicEQMaterial extends Material {
         GLES20.glUniformMatrix4fv(MVPParam, 1, false, modelViewProjection, 0);
 
         GLES20.glUniform4fv(colorParam, 1, borderColor, 0);
-        GLES20.glUniform1f(widthParam, borderWidth);
 
         //Set vertex attributes
         GLES20.glVertexAttribPointer(positionParam, 3, GLES20.GL_FLOAT, false, 0, vertexBuffer);

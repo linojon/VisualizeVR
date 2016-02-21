@@ -5,17 +5,17 @@ import com.cardbook.renderbox.components.Cube;
 import com.cardbook.renderbox.components.Plane;
 import com.cardbookvr.visualizevr.Visualization;
 import com.cardbookvr.visualizevr.VisualizerBox;
-import com.cardbookvr.visualizevr.BasicEQMaterial;
+import com.cardbookvr.visualizevr.WaveformMaterial;
 
 /**
  * Created by Jonathan on 2/9/2016.
  */
-public class BasicWaveVisualization extends Visualization {
-    static final String TAG = "BasicWaveVisualization";
+public class GeometricVisualization extends Visualization {
+    static final String TAG = "GeometricVisualization";
 
     Transform[] cubes;
 
-    public BasicWaveVisualization(VisualizerBox visualizerBox) {
+    public GeometricVisualization(VisualizerBox visualizerBox) {
         super(visualizerBox);
     }
 
@@ -36,7 +36,7 @@ public class BasicWaveVisualization extends Visualization {
                 .setLocalRotation(0,90,0)
                 .setLocalScale(5, 1, 1)
                 .addComponent(new Plane()
-                        .setMaterial(new BasicEQMaterial()
+                        .setMaterial(new WaveformMaterial()
                                 .setBuffers(Plane.vertexBuffer, Plane.texCoordBuffer, Plane.indexBuffer, Plane.numIndices)));
 
     }
