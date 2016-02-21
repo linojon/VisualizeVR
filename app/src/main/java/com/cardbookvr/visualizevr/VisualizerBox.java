@@ -20,7 +20,7 @@ public class VisualizerBox {
     final float MIN_THRESHOLD = 1.5f;
 
     //public Visualization activeViz;
-    public List<Visualization> visualizations = new ArrayList<Visualization>();
+    public static List<Visualization> visualizations = new ArrayList<Visualization>();
 
     Visualizer visualizer;
 
@@ -88,15 +88,13 @@ public class VisualizerBox {
 
     public void preDraw() {
         for (Visualization viz : visualizations) {
-            if (viz.active)
-                viz.preDraw();
+            viz.preDraw();
         }
     }
 
     public void postDraw() {
         for (Visualization viz : visualizations) {
-            if (viz.active)
-                viz.postDraw();
+            viz.postDraw();
         }
     }
 
