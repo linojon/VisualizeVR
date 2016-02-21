@@ -5,6 +5,7 @@ package com.cardbookvr.visualizevr;
  */
 public abstract class Visualization {
     VisualizerBox visualizerBox;            //owner
+    public boolean active = true;
 
     public Visualization(VisualizerBox visualizerBox){
         this.visualizerBox = visualizerBox;

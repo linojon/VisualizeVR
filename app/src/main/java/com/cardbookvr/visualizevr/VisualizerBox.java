@@ -9,6 +9,8 @@ import com.google.vrtoolkit.cardboard.CardboardView;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jonathan on 2/6/2016.
@@ -17,7 +19,9 @@ public class VisualizerBox {
     static final String TAG = "VisualizerBox";
     final float MIN_THRESHOLD = 1.5f;
 
-    Visualization activeViz;
+    //public Visualization activeViz;
+    public List<Visualization> visualizations = new ArrayList<Visualization>();
+
     Visualizer visualizer;
 
     public static int captureSize;
@@ -77,18 +81,23 @@ public class VisualizerBox {
     public void setup() {
         audioTexture = genTexture();
         fftTexture = genTexture();
-        if(activeViz != null)
-            activeViz.setup();
+        for (Visualization viz : visualizations) {
+            viz.setup();
+        }
     }
 
     public void preDraw() {
-        if(activeViz != null)
-            activeViz.preDraw();
+        for (Visualization viz : visualizations) {
+            if (viz.active)
+                viz.preDraw();
+        }
     }
 
     public void postDraw() {
-        if(activeViz != null)
-            activeViz.postDraw();
+        for (Visualization viz : visualizations) {
+            if (viz.active)
+                viz.postDraw();
+        }
     }
 
     public static int genTexture(){
