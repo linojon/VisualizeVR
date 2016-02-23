@@ -2,10 +2,8 @@ package com.cardbookvr.visualizevr.visualizations;
 
 import com.cardbook.renderbox.Transform;
 import com.cardbook.renderbox.components.Cube;
-import com.cardbook.renderbox.components.Plane;
 import com.cardbookvr.visualizevr.Visualization;
 import com.cardbookvr.visualizevr.VisualizerBox;
-import com.cardbookvr.visualizevr.WaveformMaterial;
 
 /**
  * Created by Jonathan on 2/9/2016.
@@ -14,6 +12,7 @@ public class GeometricVisualization extends Visualization {
     static final String TAG = "GeometricVisualization";
 
     Transform[] cubes;
+    Cube[] cubeRenderers;
 
     public GeometricVisualization(VisualizerBox visualizerBox) {
         super(visualizerBox);
@@ -21,29 +20,17 @@ public class GeometricVisualization extends Visualization {
 
     @Override
     public void setup() {
+        cubeRenderers = new Cube[VisualizerBox.captureSize / 2];
         cubes = new Transform[VisualizerBox.captureSize / 2];
         float offset = -3f;
         float scaleFactor = (offset * -2) / cubes.length;
         for(int i = 0; i < cubes.length; i++) {
+            cubeRenderers[i] = new Cube(true);
             cubes[i] = new Transform()
                     .setLocalPosition(offset, -2, -5)
-                    .addComponent(new Cube(true));
+                    .addComponent(cubeRenderers[i]);
             offset += scaleFactor;
         }
-
-        new Transform()
-                .setLocalPosition(-5,0,0)
-                .setLocalRotation(0,90,0)
-                .setLocalScale(5, 1, 1)
-                .addComponent(new Plane()
-                        .setMaterial(new WaveformMaterial()
-                                .setBuffers(Plane.vertexBuffer, Plane.texCoordBuffer, Plane.indexBuffer, Plane.numIndices)));
-
-    }
-
-    @Override
-    public void transitionIn() {
-
     }
 
     @Override
@@ -62,7 +49,10 @@ public class GeometricVisualization extends Visualization {
     }
 
     @Override
-    public void transitionOut() {
-
+    public void activate(boolean enabled) {
+        active = enabled;
+        for(int i = 0; i < cubes.length; i++) {
+            cubeRenderers[i].enabled = enabled;
+        }
     }
 }

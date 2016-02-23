@@ -11,8 +11,7 @@ public abstract class Visualization {
         this.visualizerBox = visualizerBox;
     }
     public abstract void setup();
-    public abstract void transitionIn();
     public abstract void preDraw();
     public abstract void postDraw();
-    public abstract void transitionOut();
+    public abstract void activate(boolean enabled);
 }

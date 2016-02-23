@@ -47,7 +47,7 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
         visualizerBox.setup();
         RenderBox.mainCamera.trailsMode = true;
         for (Visualization viz : visualizerBox.visualizations) {
-            viz.active = false;
+            viz.activate(false);
         }
     }
 
@@ -60,9 +60,9 @@ public class MainActivity extends CardboardActivity implements IRenderBox {
         if (Time.getTime() > timeToChange) {
             Log.d(TAG, "***TIME=" + Time.getTime() + "  time to change" + timeToChange);
             int idx = rand.nextInt( visualizerBox.visualizations.size() );
-            Log.d(TAG, "idx: " + idx);
+            Log.d(TAG, "****idx: " + idx);
             Visualization viz = visualizerBox.visualizations.get(idx);
-            viz.active = !viz.active;
+            viz.activate(!viz.active);
             timeToChange += CHANGE_DELAY;
         }
         visualizerBox.preDraw();

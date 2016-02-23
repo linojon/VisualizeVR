@@ -15,27 +15,19 @@ public class BlankVisualization extends Visualization {
 
     @Override
     public void setup() {
-
-    }
-
-    @Override
-    public void transitionIn() {
-
     }
 
     @Override
     public void preDraw() {
-
     }
 
     @Override
     public void postDraw() {
-
     }
 
     @Override
-    public void transitionOut() {
-
+    public void activate(boolean enabled) {
     }
+
 }
 
